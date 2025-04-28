@@ -1,8 +1,16 @@
+import Aluno from "../models/Aluno.js";
+
 class HomeController {
-  index(req, res) {
-    res.status(200).json({
-      TudoOk: true,
+  async index(req, res) {
+    const novoAluno = await Aluno.create({
+      nome: "Carlos",
+      sobrenome: "Duarte",
+      email: "carlos@gmail.com",
+      idade: 20,
+      peso: 230,
+      altura: 2.1
     });
+    res.json(novoAluno);
   }
 }
 
