@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export default {
-  dialect: "mariadb",
+  dialect: "mysql",
   host: process.env.DATABASE_HOST,
   port: process.env.PORT,
   username: process.env.DATABASE_USERNAME,
