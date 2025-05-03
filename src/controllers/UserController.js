@@ -3,8 +3,9 @@ import User from "../models/User.js";
 class UserController {
   async create(req, res) {
     try {
-      const novoUser = await User.create(req.body);
-      return res.status(201).json(novoUser);
+      const user = await User.create(req.body);
+      const { id, nome, email } = user;
+      return res.status(201).json({ id, nome, email });
     } catch (error) {
       return res.status(400).json({
         errors: error.errors.map((e) => e.message),
@@ -14,7 +15,7 @@ class UserController {
 
   async index(req, res) {
     try {
-      const users = await User.findAll();
+      const users = await User.findAll({ attributes: ["id", "nome", "email"] });
       return res.json(users);
     } catch (error) {
       console.log(error);
@@ -24,11 +25,12 @@ class UserController {
 
   async show(req, res) {
     try {
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.userId);
       if (!user) {
         return res.status(404).json({ message: "Usuário não encontrado" });
       }
-      return res.json(user);
+      const { id, nome, email } = user;
+      return res.json({ id, nome, email });
     } catch (error) {
       console.log(error);
     }
@@ -36,17 +38,14 @@ class UserController {
 
   async update(req, res) {
     try {
-      if (!req.params.id) {
-        return res.status(400).json({ message: "Faltando identificador" });
-      }
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.userId);
       if (!user) {
         return res.status(404).json({ message: "Usuário não encontrado" });
       }
 
       const newUser = await user.update(req.body);
-
-      return res.json(newUser);
+      const { id, nome, email } = newUser;
+      return res.json({ id, nome, email });
     } catch (error) {
       return res.status(400).json({
         errors: error.errors.map((e) => e.message),
@@ -56,11 +55,7 @@ class UserController {
 
   async delete(req, res) {
     try {
-      if (!req.params.id) {
-        return res.status(400).json({ message: "Faltando identificador" });
-      }
-
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.userId);
 
       if (!user) {
         return res.status(404).json({ message: "Usuário não encontrado" });
