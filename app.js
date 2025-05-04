@@ -1,5 +1,9 @@
 import dotenv from "dotenv";
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 import homeRoutes from "./src/routes/homeRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
@@ -20,6 +24,7 @@ class App {
   middlewares() {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
+    this.app.use(express.static(path.resolve(__dirname, "uploads")));
   }
 
   routes() {

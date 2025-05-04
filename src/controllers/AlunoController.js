@@ -9,7 +9,7 @@ class AlunoController {
         attributes: ["id", "nome", "sobrenome", "email", "idade", "peso", "altura"],
         include: {
           model: Foto,
-          attributes: ["nomeArquivo", "nomeOriginal"]
+          attributes: ["url", "nomeArquivo"]
         }
       });
 
@@ -38,7 +38,7 @@ class AlunoController {
         attributes: ["id", "nome", "sobrenome", "email", "idade", "peso", "altura"],
         include: {
           model: Foto,
-          attributes: ["nomeArquivo", "nomeOriginal"]
+          attributes: ["url","nomeArquivo"]
         }
       });
 
