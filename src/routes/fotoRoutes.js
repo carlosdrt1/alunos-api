@@ -6,6 +6,6 @@ import multerConfig from "../config/multer.js";
 const router = express.Router();
 const upload = multer(multerConfig);
 
-router.post("/", upload.single("foto"), fotoController.index);
+router.post("/", fotoController.index);
 
 export default router;
